@@ -1,4 +1,4 @@
-package com.github.solairerove.oopt_murmansk;
+package com.github.solairerove.oopt_murmansk.model;
 
 import java.time.LocalDate;
 

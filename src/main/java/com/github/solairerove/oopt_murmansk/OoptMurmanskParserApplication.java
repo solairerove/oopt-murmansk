@@ -84,7 +84,7 @@ public class OoptMurmanskParserApplication implements CommandLineRunner {
         return visitsByPerson;
     }
 
-    // Метод для расчета дней пребывания по годам и месяцам
+    // Метод для расчета посещений пребывания по годам и месяцам
     private void calculateAndLogVisitsByYearAndMonth(Map<String, List<VisitPeriod>> visitsByPerson) {
         // Группировка данных по годам и месяцам
         Map<Integer, Map<YearMonth, Long>> daysByYearAndMonth = new TreeMap<>();
@@ -120,7 +120,7 @@ public class OoptMurmanskParserApplication implements CommandLineRunner {
                     totalDaysByYear.putIfAbsent(year, 0L);
                     visitorDaysByYearAndMonth.get(visitorName).computeIfAbsent(year, k -> new TreeMap<>());
 
-                    // Увеличиваем счетчик дней для текущего месяца и года
+                    // Увеличиваем счетчик посещений для текущего месяца и года
                     daysByYearAndMonth.get(year).put(yearMonth, daysByYearAndMonth.get(year).getOrDefault(yearMonth, 0L) + 1);
                     totalDaysByYear.put(year, totalDaysByYear.get(year) + 1);
                     visitorDaysByYearAndMonth.get(visitorName).get(year).put(yearMonth, visitorDaysByYearAndMonth.get(visitorName).get(year).getOrDefault(yearMonth, 0L) + 1);
@@ -142,14 +142,14 @@ public class OoptMurmanskParserApplication implements CommandLineRunner {
                 output.append("  Год: ").append(year).append("\n");
 
                 for (Map.Entry<YearMonth, Long> monthEntry : yearEntry.getValue().entrySet()) {
-                    LOG.info("    Месяц: {}, Количество дней: {}", monthEntry.getKey(), monthEntry.getValue());
-                    output.append("    Месяц: ").append(monthEntry.getKey()).append(", Количество дней: ").append(monthEntry.getValue()).append("\n");
+                    LOG.info("    Месяц: {}, Количество посещений: {}", monthEntry.getKey(), monthEntry.getValue());
+                    output.append("    Месяц: ").append(monthEntry.getKey()).append(", Количество посещений: ").append(monthEntry.getValue()).append("\n");
                 }
 
-                // Логируем общее количество дней за год для текущего человека
+                // Логируем общее количество посещений за год для текущего человека
                 long totalDaysForYear = yearEntry.getValue().values().stream().mapToLong(Long::longValue).sum();
-                LOG.info("    Общее количество дней за год: {}", totalDaysForYear);
-                output.append("    Общее количество дней за год: ").append(totalDaysForYear).append("\n");
+                LOG.info("    Общее количество посещений за год: {}", totalDaysForYear);
+                output.append("    Общее количество посещений за год: ").append(totalDaysForYear).append("\n");
             }
         }
 
@@ -160,13 +160,13 @@ public class OoptMurmanskParserApplication implements CommandLineRunner {
             output.append("Год: ").append(year).append("\n");
 
             for (Map.Entry<YearMonth, Long> monthEntry : yearEntry.getValue().entrySet()) {
-                LOG.info("  Месяц: {}, Количество дней: {}", monthEntry.getKey(), monthEntry.getValue());
-                output.append("  Месяц: ").append(monthEntry.getKey()).append(", Количество дней: ").append(monthEntry.getValue()).append("\n");
+                LOG.info("  Месяц: {}, Количество посещений: {}", monthEntry.getKey(), monthEntry.getValue());
+                output.append("  Месяц: ").append(monthEntry.getKey()).append(", Количество посещений: ").append(monthEntry.getValue()).append("\n");
             }
 
-            // Логируем общее количество дней за год
-            LOG.info("  Общее количество дней за год: {}", totalDaysByYear.get(year));
-            output.append("  Общее количество дней за год: ").append(totalDaysByYear.get(year)).append("\n");
+            // Логируем общее количество посещений за год
+            LOG.info("  Общее количество посещений за год: {}", totalDaysByYear.get(year));
+            output.append("  Общее количество посещений за год: ").append(totalDaysByYear.get(year)).append("\n");
         }
 
         // Записываем результат в файл

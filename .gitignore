@@ -22,3 +22,14 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# internal resources
+src/main/resources/output.txt
+src/main/resources/permissions-090125155637.xlsx
+src/main/resources/private persons.xlsx
+
+.idea
+.idea/*
+
+target
+target/*

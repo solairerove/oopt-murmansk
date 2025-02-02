@@ -22,7 +22,7 @@ import java.util.*;
 @SpringBootApplication
 public class OoptMurmanskParserApplication implements CommandLineRunner {
 
-    private static Logger LOG = LoggerFactory.getLogger(OoptMurmanskParserApplication.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OoptMurmanskParserApplication.class);
 
     public static void main(String[] args) {
         LOG.info("STARTING THE APPLICATION");
@@ -108,8 +108,8 @@ public class OoptMurmanskParserApplication implements CommandLineRunner {
 
             // Считаем дни по годам и месяцам
             for (VisitPeriod period : mergedPeriods) {
-                LocalDate currentDate = period.getEntryDate();
-                LocalDate endDate = period.getExitDate();
+                LocalDate currentDate = period.entryDate();
+                LocalDate endDate = period.exitDate();
 
                 while (!currentDate.isAfter(endDate)) {
                     YearMonth yearMonth = YearMonth.from(currentDate);
@@ -185,7 +185,7 @@ public class OoptMurmanskParserApplication implements CommandLineRunner {
         }
 
         // Сортируем периоды по дате въезда
-        periods.sort(Comparator.comparing(VisitPeriod::getEntryDate));
+        periods.sort(Comparator.comparing(VisitPeriod::entryDate));
 
         List<VisitPeriod> mergedPeriods = new ArrayList<>();
         VisitPeriod current = periods.get(0);
@@ -194,10 +194,10 @@ public class OoptMurmanskParserApplication implements CommandLineRunner {
             VisitPeriod next = periods.get(i);
 
             // Если периоды пересекаются или соприкасаются, объединяем их
-            if (current.getExitDate().isAfter(next.getEntryDate()) || current.getExitDate().equals(next.getEntryDate())) {
+            if (current.exitDate().isAfter(next.entryDate()) || current.exitDate().equals(next.entryDate())) {
                 current = new VisitPeriod(
-                        current.getEntryDate().isBefore(next.getEntryDate()) ? current.getEntryDate() : next.getEntryDate(),
-                        current.getExitDate().isAfter(next.getExitDate()) ? current.getExitDate() : next.getExitDate()
+                        current.entryDate().isBefore(next.entryDate()) ? current.entryDate() : next.entryDate(),
+                        current.exitDate().isAfter(next.exitDate()) ? current.exitDate() : next.exitDate()
                 );
             } else {
                 mergedPeriods.add(current);
@@ -207,29 +207,5 @@ public class OoptMurmanskParserApplication implements CommandLineRunner {
 
         mergedPeriods.add(current);
         return mergedPeriods;
-    }
-
-    // Внутренний класс для хранения периода посещения
-    private static class VisitPeriod {
-        private final LocalDate entryDate;
-        private final LocalDate exitDate;
-
-        public VisitPeriod(LocalDate entryDate, LocalDate exitDate) {
-            this.entryDate = entryDate;
-            this.exitDate = exitDate;
-        }
-
-        public LocalDate getEntryDate() {
-            return entryDate;
-        }
-
-        public LocalDate getExitDate() {
-            return exitDate;
-        }
-
-        @Override
-        public String toString() {
-            return entryDate + " - " + exitDate;
-        }
     }
 }

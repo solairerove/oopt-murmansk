@@ -15,25 +15,24 @@
 	<name>oopt-murmansk-parser</name>
 	<description>Demo project for OOPT statistics parser</description>
 
-	<url/>
+	<url>https://github.com/solairerove/oopt-murmansk</url>
 
 	<licenses>
-		<license/>
+		<license>
+			<url>https://github.com/solairerove/oopt-murmansk/blob/master/LICENSE</url>
+		</license>
 	</licenses>
 
 	<developers>
-		<developer/>
+		<developer>
+			<name>Mikita Kryvitski</name>
+			<email>solairerove@gmail.com</email>
+		</developer>
 	</developers>
-
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
 
 	<properties>
 		<java.version>17</java.version>
+		<poi-ooxml.version>5.2.3</poi-ooxml.version>
 	</properties>
 
 	<dependencies>
@@ -45,7 +44,7 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>5.2.3</version>
+			<version>${poi-ooxml.version}</version>
 		</dependency>
 
 		<dependency>

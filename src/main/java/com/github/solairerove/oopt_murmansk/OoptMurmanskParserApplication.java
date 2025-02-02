@@ -1,4 +1,4 @@
-package com.github.solairerove.oopt_murmansk_parser;
+package com.github.solairerove.oopt_murmansk;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;

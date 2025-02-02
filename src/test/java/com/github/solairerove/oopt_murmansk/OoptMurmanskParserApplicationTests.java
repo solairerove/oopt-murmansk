@@ -1,4 +1,4 @@
-package com.github.solairerove.oopt_murmansk_parser;
+package com.github.solairerove.oopt_murmansk;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

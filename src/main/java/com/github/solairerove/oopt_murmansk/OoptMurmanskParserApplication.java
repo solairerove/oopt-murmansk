@@ -23,7 +23,7 @@ public class OoptMurmanskParserApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws IOException {
+    public void run(String... args) {
         log.info("EXECUTING : command line runner");
 
         this.ooptStatisticsProcessor.process("permissions-090125155637.xlsx");

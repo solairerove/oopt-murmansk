@@ -19,7 +19,7 @@ public class OoptStatisticsProcessor {
     private final OoptExcelFileParser ooptExcelFileParser;
     private final OoptStatisticsCalculator ooptStatisticsCalculator;
 
-    public void process(String fileName) throws IOException {
+    public void process(String fileName) {
         try {
             Map<String, List<VisitPeriod>> visitsByPerson = this.ooptExcelFileParser.parseExcelFile(fileName);
             this.ooptStatisticsCalculator.calculateAndLogVisitsByYearAndMonth(visitsByPerson);

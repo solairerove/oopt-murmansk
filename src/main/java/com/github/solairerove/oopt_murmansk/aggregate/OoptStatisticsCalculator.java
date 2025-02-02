@@ -25,8 +25,8 @@ public class OoptStatisticsCalculator {
     // Метод для расчета посещений пребывания по годам и месяцам
     public void calculateAndLogVisitsByYearAndMonth(Map<String, List<VisitPeriod>> visitsByPerson) {
         // Группировка данных по годам и месяцам
-        Map<Integer, Map<YearMonth, Long>> daysByYearAndMonth = new TreeMap<>();
-        Map<Integer, Long> totalDaysByYear = new TreeMap<>();
+        Map<Integer, Map<YearMonth, Long>> visitsByYearAndMonth = new TreeMap<>();
+        Map<Integer, Long> totalVisitsByYear = new TreeMap<>();
 
         // Группировка данных по ФИО, годам и месяцам
         Map<String, Map<Integer, Map<YearMonth, Long>>> visitorDaysByYearAndMonth = new HashMap<>();
@@ -54,13 +54,13 @@ public class OoptStatisticsCalculator {
                     int year = yearMonth.getYear();
 
                     // Инициализация структур данных для года, если они еще не созданы
-                    daysByYearAndMonth.computeIfAbsent(year, k -> new TreeMap<>());
-                    totalDaysByYear.putIfAbsent(year, 0L);
+                    visitsByYearAndMonth.computeIfAbsent(year, k -> new TreeMap<>());
+                    totalVisitsByYear.putIfAbsent(year, 0L);
                     visitorDaysByYearAndMonth.get(visitorName).computeIfAbsent(year, k -> new TreeMap<>());
 
                     // Увеличиваем счетчик посещений для текущего месяца и года
-                    daysByYearAndMonth.get(year).put(yearMonth, daysByYearAndMonth.get(year).getOrDefault(yearMonth, 0L) + 1);
-                    totalDaysByYear.put(year, totalDaysByYear.get(year) + 1);
+                    visitsByYearAndMonth.get(year).put(yearMonth, visitsByYearAndMonth.get(year).getOrDefault(yearMonth, 0L) + 1);
+                    totalVisitsByYear.put(year, totalVisitsByYear.get(year) + 1);
                     visitorDaysByYearAndMonth.get(visitorName).get(year).put(yearMonth, visitorDaysByYearAndMonth.get(visitorName).get(year).getOrDefault(yearMonth, 0L) + 1);
 
                     currentDate = currentDate.plusDays(1);
@@ -68,6 +68,7 @@ public class OoptStatisticsCalculator {
             }
         }
 
+        // TODO: move to logger service
         // Логируем результат по годам и месяцам для каждого человека
         for (Map.Entry<String, Map<Integer, Map<YearMonth, Long>>> visitorEntry : visitorDaysByYearAndMonth.entrySet()) {
             String visitorName = visitorEntry.getKey();
@@ -92,7 +93,7 @@ public class OoptStatisticsCalculator {
         }
 
         // Логируем общий результат по годам и месяцам
-        for (Map.Entry<Integer, Map<YearMonth, Long>> yearEntry : daysByYearAndMonth.entrySet()) {
+        for (Map.Entry<Integer, Map<YearMonth, Long>> yearEntry : visitsByYearAndMonth.entrySet()) {
             int year = yearEntry.getKey();
             log.info("Год: {}", year);
             output.append("Год: ").append(year).append("\n");
@@ -103,10 +104,11 @@ public class OoptStatisticsCalculator {
             }
 
             // Логируем общее количество посещений за год
-            log.info("  Общее количество посещений за год: {}", totalDaysByYear.get(year));
-            output.append("  Общее количество посещений за год: ").append(totalDaysByYear.get(year)).append("\n");
+            log.info("  Общее количество посещений за год: {}", totalVisitsByYear.get(year));
+            output.append("  Общее количество посещений за год: ").append(totalVisitsByYear.get(year)).append("\n");
         }
 
+        // TODO: move to writer service
         // Записываем результат в файл
         try {
             Files.write(Paths.get("src/main/resources/output.txt"), output.toString().getBytes());

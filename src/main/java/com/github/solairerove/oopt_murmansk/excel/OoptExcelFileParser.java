@@ -21,7 +21,6 @@ import java.util.Map;
 @Service
 public class OoptExcelFileParser {
 
-    // Метод для чтения Excel-файла и фильтрации данных
     public Map<String, List<VisitPeriod>> parseExcelFile(String fileName) throws IOException {
         log.info("Чтение файла: {}", fileName);
 
@@ -41,7 +40,6 @@ public class OoptExcelFileParser {
                 if (row == null) continue;
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-                // Чтение данных из колонок
                 LocalDate entryDate = LocalDate.parse(row.getCell(2).getStringCellValue(), formatter); // Дата въезда
                 LocalDate exitDate = LocalDate.parse(row.getCell(3).getStringCellValue(), formatter); // Дата выезда
                 String visitorName = row.getCell(4).getStringCellValue().trim().replaceAll("\\s+", " "); // ФИО посетителя (убираем лишние пробелы)

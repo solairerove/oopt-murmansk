@@ -1,6 +1,6 @@
 package com.github.solairerove.oopt_murmansk.process;
 
-import com.github.solairerove.oopt_murmansk.aggregate.OoptStatisticsCalculator;
+import com.github.solairerove.oopt_murmansk.statistics.OoptStatisticsService;
 import com.github.solairerove.oopt_murmansk.excel.OoptExcelFileParser;
 import com.github.solairerove.oopt_murmansk.model.VisitPeriod;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +17,12 @@ import java.util.Map;
 public class OoptStatisticsProcessor {
 
     private final OoptExcelFileParser ooptExcelFileParser;
-    private final OoptStatisticsCalculator ooptStatisticsCalculator;
+    private final OoptStatisticsService ooptStatisticsService;
 
     public void process(String fileName) {
         try {
             Map<String, List<VisitPeriod>> visitsByPerson = this.ooptExcelFileParser.parseExcelFile(fileName);
-            this.ooptStatisticsCalculator.calculateAndLogVisitsByYearAndMonth(visitsByPerson);
+            this.ooptStatisticsService.aggregateAndLogVisitsByYearAndMonth(visitsByPerson);
         } catch (IOException e) {
             log.error("Ошибка при чтении файла", e);
         }

@@ -18,7 +18,7 @@ public class OoptMurmanskParserApplication implements CommandLineRunner {
     private final OoptStatisticsProcessor ooptStatisticsProcessor;
 
     public static void main(String[] args) {
-        log.info("STARTING THE APPLICATION");
+        System.out.println("STARTING THE APPLICATION");
         SpringApplication app = new SpringApplication(OoptMurmanskParserApplication.class);
 
         Map<String, Object> props = new HashMap<>();
@@ -27,12 +27,12 @@ public class OoptMurmanskParserApplication implements CommandLineRunner {
 
         app.run(args);
 
-        log.info("APPLICATION FINISHED");
+        System.out.println("APPLICATION FINISHED");
     }
 
     @Override
     public void run(String... args) {
-        log.info("EXECUTING : command line runner");
+        System.out.println("EXECUTING : command line runner");
 
         this.ooptStatisticsProcessor.process();
 

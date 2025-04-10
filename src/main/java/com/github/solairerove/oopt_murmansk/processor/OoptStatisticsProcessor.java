@@ -38,7 +38,7 @@ public class OoptStatisticsProcessor {
 
             Path workingDir = Paths.get(System.getProperty("user.dir"));
             Path inputPath = workingDir.resolve(INPUT_FILENAME);
-            log.info("Рабочая директория: {}", workingDir);
+            System.out.printf("Рабочая директория: %s", workingDir);
 
             try (FileInputStream fileInputStream = new FileInputStream(inputPath.toFile())) {
                 Workbook workbook = new XSSFWorkbook(fileInputStream);
@@ -61,7 +61,7 @@ public class OoptStatisticsProcessor {
             }
 
         } catch (IOException e) {
-            log.error("Ошибка обработки файла", e);
+            System.out.printf("%s, %s%n", "Ошибка обработки файла", e);
         }
     }
 }

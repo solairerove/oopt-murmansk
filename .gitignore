@@ -33,3 +33,6 @@ src/main/resources/private persons.xlsx
 
 target
 target/*
+
+dist
+dist/*

@@ -5,8 +5,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.YearMonth;
 import java.util.Map;
@@ -16,7 +18,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class OoptStatisticsWriter {
 
-    public void writeToFile(String pathToFile, AggregatedVisits aggregatedVisits) {
+    public void writeToFile(Path outputPath, AggregatedVisits aggregatedVisits) {
         var totalVisitsByYear = aggregatedVisits.totalVisitsByYear();
         var visitsByYearAndMonth = aggregatedVisits.visitsByYearAndMonth();
         var visitorDaysByYearAndMonth = aggregatedVisits.visitorsByYearAndMonth();
@@ -51,7 +53,7 @@ public class OoptStatisticsWriter {
         }
 
         try {
-            Files.write(Paths.get(pathToFile), output.toString().getBytes());
+            Files.write(outputPath, output.toString().getBytes());
             log.info("Результат записан в файл output.txt");
         } catch (IOException e) {
             log.error("Ошибка при записи в файл", e);

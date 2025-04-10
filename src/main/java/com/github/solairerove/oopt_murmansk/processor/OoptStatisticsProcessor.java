@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +25,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class OoptStatisticsProcessor {
 
-    private final static String PATH_TO_INPUT = "/Users/solairerove/Downloads/Статистика за февраль, март 2025.xlsx";
-    private final static String PATH_TO_OUTPUT = "src/main/resources/%s.txt";
+    private final static String INPUT_FILENAME = "input.xlsx";
+    private final static String OUTPUT_FILENAME_TEMPLATE = "%s.txt";
 
     private final OoptExcelFileParser ooptExcelFileParser;
     private final OoptStatisticsAggregator ooptStatisticsAggregator;
@@ -33,7 +35,12 @@ public class OoptStatisticsProcessor {
 
     public void process() {
         try {
-            try (FileInputStream fileInputStream = new FileInputStream(PATH_TO_INPUT)) {
+
+            Path workingDir = Paths.get(System.getProperty("user.dir"));
+            Path inputPath = workingDir.resolve(INPUT_FILENAME);
+            log.info("Рабочая директория: {}", workingDir);
+
+            try (FileInputStream fileInputStream = new FileInputStream(inputPath.toFile())) {
                 Workbook workbook = new XSSFWorkbook(fileInputStream);
                 int numberOfSheets = workbook.getNumberOfSheets();
                 for (int i = 0; i < numberOfSheets; i++) {
@@ -45,8 +52,9 @@ public class OoptStatisticsProcessor {
                     this.ooptStatisticsLogger.logStatisticsByNames(aggregatedVisits);
                     this.ooptStatisticsLogger.logTotalStatisticsByYearsAndMonths(aggregatedVisits);
 
-                    var outputFile = String.format(PATH_TO_OUTPUT, sheetName);
-                    this.ooptStatisticsWriter.writeToFile(outputFile, aggregatedVisits);
+                    String outputName = String.format(OUTPUT_FILENAME_TEMPLATE, sheetName);
+                    Path outputPath = workingDir.resolve(outputName);
+                    this.ooptStatisticsWriter.writeToFile(outputPath, aggregatedVisits);
                 }
 
                 workbook.close();

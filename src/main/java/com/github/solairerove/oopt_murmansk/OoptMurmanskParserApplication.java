@@ -7,6 +7,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 @SpringBootApplication
 @RequiredArgsConstructor
@@ -16,7 +19,14 @@ public class OoptMurmanskParserApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         log.info("STARTING THE APPLICATION");
-        SpringApplication.run(OoptMurmanskParserApplication.class, args);
+        SpringApplication app = new SpringApplication(OoptMurmanskParserApplication.class);
+
+        Map<String, Object> props = new HashMap<>();
+        props.put("server.port", 8085);
+        app.setDefaultProperties(props);
+
+        app.run(args);
+
         log.info("APPLICATION FINISHED");
     }
 

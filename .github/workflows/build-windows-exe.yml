@@ -1,9 +1,9 @@
 name: Build Windows EXE
 
 on:
-  workflow_dispatch:  # запуск по кнопке в GitHub
+  workflow_dispatch:
   push:
-    branches: [ master ]  # или main — укажи свою
+    branches: [ master ]
 
 jobs:
   build-exe:
@@ -23,6 +23,7 @@ jobs:
         run: mvn clean package
 
       - name: Package EXE using jpackage
+        shell: cmd
         run: |
           jpackage ^
             --input target ^

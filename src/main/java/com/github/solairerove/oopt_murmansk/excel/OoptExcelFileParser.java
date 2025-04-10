@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,20 +34,17 @@ public class OoptExcelFileParser {
             for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                 Row row = sheet.getRow(i);
                 if (row == null) continue;
-                if (row.getCell(0) == null) continue;
-                if (row.getCell(1) == null) continue;
-                if (row.getCell(0).getLocalDateTimeCellValue() == null) continue;
-                if (row.getCell(1).getLocalDateTimeCellValue() == null) continue;
+                if (row.getCell(2) == null) continue;
+                if (row.getCell(3) == null) continue;
+                if (row.getCell(2).getStringCellValue() == null) continue;
+                if (row.getCell(3).getStringCellValue() == null) continue;
 
-//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-//                LocalDate entryDate = LocalDate. parse(row.getCell(1).getStringCellValue(), formatter); // Дата въезда
-
-                LocalDate entryDate = row.getCell(0).getLocalDateTimeCellValue().toLocalDate();
-//                LocalDate exitDate = LocalDate.parse(row.getCell(2).getStringCellValue(), formatter); // Дата выезда
-                LocalDate exitDate = row.getCell(1).getLocalDateTimeCellValue().toLocalDate();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                LocalDate entryDate = LocalDate. parse(row.getCell(2).getStringCellValue(), formatter); // Дата въезда
+                LocalDate exitDate = LocalDate.parse(row.getCell(3).getStringCellValue(), formatter); // Дата выезда
                 String visitorName = row.getCell(4).getStringCellValue().trim().replaceAll("\\s+", " "); // ФИО посетителя (убираем лишние пробелы)
-                String blankSent = row.getCell(12).getStringCellValue(); // Бланк отправлен
-                String status = row.getCell(13).getStringCellValue(); // Статус
+                String blankSent = row.getCell(18).getStringCellValue(); // Бланк отправлен
+                String status = row.getCell(19).getStringCellValue(); // Статус
 
                 // Фильтрация данных
                 if ("Да".equalsIgnoreCase(blankSent) && "Выдано".equalsIgnoreCase(status)) {

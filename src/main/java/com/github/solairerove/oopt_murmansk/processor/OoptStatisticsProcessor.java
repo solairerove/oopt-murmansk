@@ -19,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class OoptStatisticsProcessor {
 
-    private final static String pathToInput = "/Users/solairerove/Downloads/oopt.xlsx";
+    private final static String pathToInput = "/Users/solairerove/Downloads/Статистика за февраль, март 2025.xlsx";
     private final static String pathToOutput = "src/main/resources/output.txt";
 
     private final OoptExcelFileParser ooptExcelFileParser;

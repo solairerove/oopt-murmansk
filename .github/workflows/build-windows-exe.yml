@@ -42,4 +42,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: oopt-exe
-          path: dist/oopt/oopt.exe
+          path: dist/oopt-1.0.exe

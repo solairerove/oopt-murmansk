@@ -25,5 +25,7 @@ public class OoptMurmanskParserApplication implements CommandLineRunner {
         log.info("EXECUTING : command line runner");
 
         this.ooptStatisticsProcessor.process();
+
+        SpringApplication.exit(SpringApplication.run(OoptMurmanskParserApplication.class, args));
     }
 }

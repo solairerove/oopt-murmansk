@@ -21,6 +21,10 @@ import java.util.Map;
 @Service
 public class OoptExcelFileParser {
 
+    private final static String DATE_PATTERN = "dd.MM.yyyy";
+    private final static String BLANK_SET_FILTER = "Да";
+    private final static String STATUS_FILTER = "Выдано";
+
     public Map<String, List<VisitPeriod>> parseExcelFile(String filePath) throws IOException {
         log.info("Чтение файла: {}", filePath);
 
@@ -39,7 +43,7 @@ public class OoptExcelFileParser {
                 if (row.getCell(2).getStringCellValue() == null) continue;
                 if (row.getCell(3).getStringCellValue() == null) continue;
 
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
                 LocalDate entryDate = LocalDate. parse(row.getCell(2).getStringCellValue(), formatter); // Дата въезда
                 LocalDate exitDate = LocalDate.parse(row.getCell(3).getStringCellValue(), formatter); // Дата выезда
                 String visitorName = row.getCell(4).getStringCellValue().trim().replaceAll("\\s+", " "); // ФИО посетителя (убираем лишние пробелы)
@@ -47,7 +51,7 @@ public class OoptExcelFileParser {
                 String status = row.getCell(19).getStringCellValue(); // Статус
 
                 // Фильтрация данных
-                if ("Да".equalsIgnoreCase(blankSent) && "Выдано".equalsIgnoreCase(status)) {
+                if (BLANK_SET_FILTER.equalsIgnoreCase(blankSent) && STATUS_FILTER.equalsIgnoreCase(status)) {
                     VisitPeriod period = new VisitPeriod(entryDate, exitDate);
 
                     // Добавляем период в список для текущего ФИО

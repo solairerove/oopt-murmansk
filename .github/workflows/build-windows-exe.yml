@@ -34,8 +34,12 @@ jobs:
             --dest dist ^
             --java-options "-Dspring.output.ansi.enabled=ALWAYS"
 
-      - name: Upload EXE as artifact
+      - name: List dist contents
+        shell: cmd
+        run: dir dist /s
+
+      - name: Upload EXE
         uses: actions/upload-artifact@v4
         with:
-          name: oopt-windows-exe
-          path: dist/oopt.exe
+          name: oopt-exe
+          path: dist/oopt/oopt.exe

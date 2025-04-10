@@ -1,0 +1,40 @@
+name: Build Windows EXE
+
+on:
+  workflow_dispatch:  # запуск по кнопке в GitHub
+  push:
+    branches: [ master ]  # или main — укажи свою
+
+jobs:
+  build-exe:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build fat JAR
+        run: mvn clean package
+
+      - name: Package EXE using jpackage
+        run: |
+          jpackage ^
+            --input target ^
+            --name oopt ^
+            --main-jar oopt-murmansk-0.0.1-SNAPSHOT.jar ^
+            --type exe ^
+            --win-console ^
+            --dest dist ^
+            --java-options "-Dspring.output.ansi.enabled=ALWAYS"
+
+      - name: Upload EXE as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: oopt-windows-exe
+          path: dist/oopt.exe

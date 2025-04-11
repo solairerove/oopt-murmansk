@@ -6,12 +6,9 @@ import com.github.solairerove.oopt_murmansk.model.AggregatedVisits;
 import com.github.solairerove.oopt_murmansk.model.VisitPeriod;
 import com.github.solairerove.oopt_murmansk.statistics.OoptStatisticsLogger;
 import com.github.solairerove.oopt_murmansk.statistics.OoptStatisticsWriter;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,9 +17,6 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
-@Service
-@RequiredArgsConstructor
 public class OoptStatisticsProcessor {
 
     private final static String INPUT_FILENAME = "input.xlsx";
@@ -33,12 +27,19 @@ public class OoptStatisticsProcessor {
     private final OoptStatisticsLogger ooptStatisticsLogger;
     private final OoptStatisticsWriter ooptStatisticsWriter;
 
+    public OoptStatisticsProcessor(OoptExcelFileParser ooptExcelFileParser, OoptStatisticsAggregator ooptStatisticsAggregator, OoptStatisticsLogger ooptStatisticsLogger, OoptStatisticsWriter ooptStatisticsWriter) {
+        this.ooptExcelFileParser = ooptExcelFileParser;
+        this.ooptStatisticsAggregator = ooptStatisticsAggregator;
+        this.ooptStatisticsLogger = ooptStatisticsLogger;
+        this.ooptStatisticsWriter = ooptStatisticsWriter;
+    }
+
     public void process() {
         try {
 
             Path workingDir = Paths.get(System.getProperty("user.dir"));
             Path inputPath = workingDir.resolve(INPUT_FILENAME);
-            System.out.printf("Рабочая директория: %s", workingDir);
+            System.out.printf("Рабочая директория: %s \n", workingDir);
 
             try (FileInputStream fileInputStream = new FileInputStream(inputPath.toFile())) {
                 Workbook workbook = new XSSFWorkbook(fileInputStream);
@@ -61,7 +62,7 @@ public class OoptStatisticsProcessor {
             }
 
         } catch (IOException e) {
-            System.out.printf("%s, %s%n", "Ошибка обработки файла", e);
+            System.out.printf("%s, %s%n", "Ошибка обработки файла \n", e);
         }
     }
 }

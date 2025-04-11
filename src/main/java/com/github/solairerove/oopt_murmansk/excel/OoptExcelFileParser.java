@@ -1,10 +1,8 @@
 package com.github.solairerove.oopt_murmansk.excel;
 
 import com.github.solairerove.oopt_murmansk.model.VisitPeriod;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -14,8 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
-@Service
 public class OoptExcelFileParser {
 
     private final static String DATE_PATTERN = "dd.MM.yyyy";

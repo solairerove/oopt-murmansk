@@ -24,17 +24,16 @@ mvn clean install -DskipTests=true && java -jar target/oopt-murmansk-0.0.1-SNAPS
 
 ### How to create .exe
 ```shell
-lsof -i :8081
-
 mvn clean package
   
-jpackage \
-  --input target \
-  --name oopt \
-  --main-jar oopt-murmansk-0.0.1-SNAPSHOT.jar \
-  --type app-image \
-  --dest dist \
-  --java-options "-Dspring.output.ansi.enabled=ALWAYS"
+jpackage ^
+  --input target ^
+  --name oopt ^
+  --main-jar oopt-murmansk-1.0.jar ^
+  --main-class com.github.solairerove.oopt_murmansk.Main ^
+  --type exe ^
+  --win-console ^
+  --dest dist
   
 ./dist/oopt.app/Contents/MacOS/oopt
 ```

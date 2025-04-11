@@ -1,21 +1,13 @@
 package com.github.solairerove.oopt_murmansk.statistics;
 
 import com.github.solairerove.oopt_murmansk.model.AggregatedVisits;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.YearMonth;
 import java.util.Map;
 
-@Slf4j
-@Service
-@RequiredArgsConstructor
 public class OoptStatisticsWriter {
 
     public void writeToFile(Path outputPath, AggregatedVisits aggregatedVisits) {
@@ -54,9 +46,9 @@ public class OoptStatisticsWriter {
 
         try {
             Files.write(outputPath, output.toString().getBytes());
-            log.info("Результат записан в файл output.txt");
+            System.out.println("Результат записан в файл output.txt");
         } catch (IOException e) {
-            log.error("Ошибка при записи в файл", e);
+            System.out.println("Ошибка при записи в файл");
         }
     }
 }

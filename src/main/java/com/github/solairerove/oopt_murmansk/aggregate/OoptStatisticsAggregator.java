@@ -2,9 +2,6 @@ package com.github.solairerove.oopt_murmansk.aggregate;
 
 import com.github.solairerove.oopt_murmansk.model.AggregatedVisits;
 import com.github.solairerove.oopt_murmansk.model.VisitPeriod;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -13,12 +10,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-@Slf4j
-@Service
-@RequiredArgsConstructor
 public class OoptStatisticsAggregator {
 
     private final OoptStatisticsPeriodMergeService ooptStatisticsPeriodMergeService;
+
+    public OoptStatisticsAggregator(OoptStatisticsPeriodMergeService ooptStatisticsPeriodMergeService) {
+        this.ooptStatisticsPeriodMergeService = ooptStatisticsPeriodMergeService;
+    }
 
     // Метод для расчета посещений пребывания по годам и месяцам
     public AggregatedVisits aggregateVisits(Map<String, List<VisitPeriod>> visitsByPerson) {

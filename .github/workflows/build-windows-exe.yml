@@ -28,11 +28,11 @@ jobs:
           jpackage ^
             --input target ^
             --name oopt ^
-            --main-jar oopt-murmansk-0.0.1-SNAPSHOT.jar ^
+            --main-jar oopt-murmansk-1.0-jar-with-dependencies.jar ^
+            --main-class com.github.solairerove.oopt_murmansk.Main ^
             --type exe ^
             --win-console ^
-            --dest dist ^
-            --java-options "-Dspring.output.ansi.enabled=ALWAYS"
+            --dest dist
 
       - name: List dist contents
         shell: cmd
